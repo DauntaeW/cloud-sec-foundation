@@ -6,3 +6,4 @@ This file will explain all decisions made during the project
 
 workflows - terraform-validate.yml :
   - Why -backend=false on init - the S3 remote backend hasn't been built yet (that’s Milestone 1, #4-6, next). This flag lets validate check syntax without needing a real backend to connect to.
+  - @v4 and @v3 are mutable tags, meaning the maintainer can repoint them to a different commit at any time. If action/checkout's repo were ever compromised, an attacker could push mailcious code and retag v4 to point at it. The workflow would silently pull the compromised version on the next run, with zero code change on my side # example of a possible supply chain attacker vector
