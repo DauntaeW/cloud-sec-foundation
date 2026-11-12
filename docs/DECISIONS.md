@@ -4,12 +4,12 @@ This document records the major architectural decisions made for Project A, incl
 
 ---
 
-## 1. Region Selection - us-east-1 Primary / eu-west-1 DR
+## 1. Region Selection - us-east-2 Primary / eu-west-1 DR
 
-### Decision: Use us-east-1 as the primary production and development region, with eu-west-1 serving as the disaster recovery region.
-
+### Decision: Use us-east-2 as the primary production and development region, with eu-west-1 serving as the disaster recovery region.
+### **Update (post-decision):** Primary region changed from us-east-1 to us-east-2  after AWS account creation. The account was created via AWS's new simplified  signup experience ("Sign up for AWS (new)"), which auto-assigns a home Region based on contact address and does not allow manual Region selection until "Advanced Features" are activated — a step currently blocked by an open AWS Support ticket. us-east-2 was selected by AWS, not chosen for a technical reason. The underlying design rationale (US-based primary, EU-based DR, cross-region failover architecture) is unaffected by this specific Region.
 **Chose:** 
-- `us-east-1` as the primary region, hosting both development and production workloads.
+- `us-east-2` as the primary region, hosting both development and production workloads.
 - `eu-west-1` as the secondary region, hosting production resources for disaster recovery.
 - Both regions use two Availability Zones to provide availability within their respective regions.
 
@@ -159,7 +159,7 @@ This document records the major architectural decisions made for Project A, incl
 ### Decision: Use a warm-standby disaster recovery model in eu-west-1 rather than active-active or cold standby.
 
 **Chose:**
-- `us-east-1` as the active production region handling normal user traffic.
+- `us-east-2` as the active production region handling normal user traffic.
 - `eu-west-1` as the warm standby region, with its production network and supporting infrastructure provisioned.
 - The DR application tier maintained at reduced capacity to minimize ongoing costs.
 - The DR data tier kept synchronized with the primary production environment.
